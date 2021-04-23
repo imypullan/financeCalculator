@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>finance calculator</title>
+    <script defer src="js/dist/app.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+<div class="container">
+    <div class="header"><h1>Finance calculator</h1></div>
+
+    <form>
+        <div class="inputField">
+            <label>&#163;&#163;&#163; to borrow</label>
+            <input type="text" placeholder="how much you wanna borrow?" id="amountToBorrow">
+        </div>
+        <div class="inputField">
+            <label>Expected salary</label>
+            <input type="text" placeholder="how much will you earn?" id="amountToEarn">
+        </div>
+        <div class="inputField">
+            <label>Repayment rate (%)</label>
+            <input type="text" placeholder="how quickly you wanna pay it back?" id="rateOfRepay">
+        </div>
+        <div class="inputField">
+            <label>Loan amount</label>
+            <input type="submit" value="calculate">
+        </div>
+    </form>
+
+    <div class="showResults">
+        <div class="adminFee">
+            <h3>Admin fee</h3>
+            <span>&#163;1000</span>
+        </div>
+        <div class="totalOwed">
+            <h3>Total owed</h3>
+            <span>&#163;11,000</span>
+        </div>
+        <div class="timeTaken">
+            <h3>Time taken</h3>
+            <span>Four years</span>
+        </div>
+    </div>
+
+
+</div>
+</body>
+
+
+
+</html>
