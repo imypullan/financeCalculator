@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var calculateSubmit = document.querySelector('form');
+document.querySelector('.modal');
 var financing = {
     loanAmount: 0,
     expectedSalary: 0,
@@ -59,11 +60,27 @@ function calculateLoanItems(e) {
 }
 function checkLoanSize(financing) {
     var loanInput = document.querySelector('#amountToBorrow');
+    var errorModal = document.querySelector('#modal1');
+    console.log(errorModal);
     if (financing.loanAmount > 0 && financing.loanAmount <= financing.maxLoanSize) {
         loanInput.classList.remove('error');
+        errorModal.classList.add('errorModal');
         return true;
     }
     loanInput.classList.add('error');
+    errorModal.classList.remove('errorModal');
+    return false;
+}
+function checkRepaymentRate(financing) {
+    var repaymentRateInput = document.querySelector('#repaymentRate');
+    var errorModal = document.querySelector('#modal2');
+    if (financing.repaymentRate >= 10 && financing.repaymentRate <= 100) {
+        repaymentRateInput.classList.remove('error');
+        errorModal.classList.add('errorModal');
+        return true;
+    }
+    repaymentRateInput.classList.add('error');
+    errorModal.classList.remove('errorModal');
     return false;
 }
 function calculateAdminFee(financing) {
@@ -74,15 +91,6 @@ function calculateAdminFee(financing) {
         return financing.loanAmount += 500;
     }
     return financing.loanAmount;
-}
-function checkRepaymentRate(financing) {
-    var repaymentRateInput = document.querySelector('#repaymentRate');
-    if (financing.repaymentRate >= 10 && financing.repaymentRate <= 100) {
-        repaymentRateInput.classList.remove('error');
-        return true;
-    }
-    repaymentRateInput.classList.add('error');
-    return false;
 }
 function displayResults(financing) {
     return __awaiter(this, void 0, void 0, function () {

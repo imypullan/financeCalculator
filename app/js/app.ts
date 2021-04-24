@@ -1,4 +1,5 @@
 const calculateSubmit = document.querySelector('form');
+document.querySelector('.modal')
 interface Calculation {
     loanAmount: number
     expectedSalary: number
@@ -31,11 +32,27 @@ function calculateLoanItems(e) {
 }
 function checkLoanSize(financing: Calculation):boolean {
     let loanInput = document.querySelector<HTMLInputElement>('#amountToBorrow');
+    let errorModal = document.querySelector('#modal1');
+    console.log(errorModal);
     if(financing.loanAmount > 0 && financing.loanAmount <= financing.maxLoanSize) {
         loanInput.classList.remove('error');
+        errorModal.classList.add('errorModal');
         return true;
     }
     loanInput.classList.add('error');
+    errorModal.classList.remove('errorModal');
+    return false;
+}
+function checkRepaymentRate(financing: Calculation):boolean {
+    let repaymentRateInput = document.querySelector<HTMLInputElement>('#repaymentRate');
+    let errorModal = document.querySelector('#modal2');
+    if(financing.repaymentRate >= 10 && financing.repaymentRate <= 100) {
+        repaymentRateInput.classList.remove('error');
+        errorModal.classList.add('errorModal');
+        return true;
+    }
+    repaymentRateInput.classList.add('error');
+    errorModal.classList.remove('errorModal');
     return false;
 }
 function calculateAdminFee(financing: Calculation):number {
@@ -45,15 +62,6 @@ function calculateAdminFee(financing: Calculation):number {
         return financing.loanAmount += 500;
     }
     return financing.loanAmount;
-}
-function checkRepaymentRate(financing: Calculation):boolean {
-    let repaymentRateInput = document.querySelector<HTMLInputElement>('#repaymentRate');
-    if(financing.repaymentRate >= 10 && financing.repaymentRate <= 100) {
-        repaymentRateInput.classList.remove('error');
-        return true;
-    }
-    repaymentRateInput.classList.add('error');
-    return false;
 }
 async function displayResults(financing: Calculation) {
     let response = await fetch('template.hbs');
