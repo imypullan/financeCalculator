@@ -13,9 +13,13 @@
     "@babel/preset-env": "^7.9.5",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
+    "gulp-handlebars": "^5.0.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^6.0.0-alpha.1",
     "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
   }
 }

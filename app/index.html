@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>finance calculator</title>
+    <script defer src="js/dist/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+<div class="container">
+    <div class="header"><h1>Finance calculator</h1></div>
+    <div class="errorModal1">Loan amount must be between &#163;1 and &#163;10,000</div>
+    <div class="errorModal2">Repayment rate must be between &#163;10 and &#163;100</div>
+
+    <form>
+        <div class="inputField">
+            <label>&#163;&#163;&#163; to borrow</label>
+            <input type="number" placeholder="&#163;" id="amountToBorrow">
+        </div>
+        <div class="inputField">
+            <label>Expected salary</label>
+            <input type="number" placeholder="how much will you earn?" value="25000" id="expectedSalary">
+        </div>
+        <div class="inputField">
+            <label>Annual repayment rate (%)</label>
+            <input type="number" placeholder="10%" id="repaymentRate">
+        </div>
+        <div class="inputField">
+            <input type="submit" value="calculate">
+        </div>
+    </form>
+
+    <div class="showResults">
+
+    </div>
+
+
+</div>
+</body>
+
+
+
+</html>
