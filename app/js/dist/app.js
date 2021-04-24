@@ -35,14 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var calculateSubmit = document.querySelector('form');
-document.querySelector('.modal');
 var financing = {
     loanAmount: 0,
     expectedSalary: 0,
     repaymentRate: 0,
     maxLoanSize: 10000,
-    adminFee: 400,
-    yearsToRepay: 0
+    adminFee: 0,
+    monthsToRepay: 0
 };
 calculateSubmit.addEventListener('submit', calculateLoanItems);
 function calculateLoanItems(e) {
@@ -53,15 +52,15 @@ function calculateLoanItems(e) {
     var loanSizeInRange = checkLoanSize(financing);
     var repaymentRateInRange = checkRepaymentRate(financing);
     if (loanSizeInRange && repaymentRateInRange) {
-        calculateAdminFee(financing);
+        addAdminFee(financing);
+        calculateUpfrontAdmin(financing);
+        calculateMonthsToPay(financing);
         displayResults(financing);
     }
-    console.log(financing);
 }
 function checkLoanSize(financing) {
     var loanInput = document.querySelector('#amountToBorrow');
     var errorModal = document.querySelector('#modal1');
-    console.log(errorModal);
     if (financing.loanAmount > 0 && financing.loanAmount <= financing.maxLoanSize) {
         loanInput.classList.remove('error');
         errorModal.classList.add('errorModal');
@@ -83,7 +82,7 @@ function checkRepaymentRate(financing) {
     errorModal.classList.remove('errorModal');
     return false;
 }
-function calculateAdminFee(financing) {
+function addAdminFee(financing) {
     if (financing.loanAmount > (financing.maxLoanSize * 0.9)) {
         return financing.loanAmount += 1000;
     }
@@ -92,9 +91,25 @@ function calculateAdminFee(financing) {
     }
     return financing.loanAmount;
 }
+function calculateUpfrontAdmin(financing) {
+    return financing.adminFee = (financing.loanAmount * 0.05);
+}
+function calculateMonthsToPay(financing) {
+    var loanAmount = financing.loanAmount;
+    var monthlySalary = financing.expectedSalary / 12;
+    var monthlyRepayment = (monthlySalary / financing.repaymentRate).toFixed(2);
+    while (loanAmount > 0) {
+        loanAmount -= monthlyRepayment;
+        financing.monthsToRepay++;
+        console.log(financing.monthsToRepay);
+        console.log(loanAmount);
+        console.log(monthlyRepayment);
+    }
+    return financing.monthsToRepay;
+}
 function displayResults(financing) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, source, html;
+        var response, source, template, html;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, fetch('template.hbs')];

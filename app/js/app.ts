@@ -1,20 +1,19 @@
 const calculateSubmit = document.querySelector('form');
-document.querySelector('.modal')
 interface Calculation {
     loanAmount: number
     expectedSalary: number
     repaymentRate: number
     maxLoanSize: number
     adminFee: number
-    yearsToRepay: number
+    monthsToRepay: number
 }
 let financing = {
     loanAmount: 0,
     expectedSalary: 0,
     repaymentRate: 0,
     maxLoanSize: 10000,
-    adminFee: 400,
-    yearsToRepay: 0
+    adminFee: 0,
+    monthsToRepay: 0
 }
 calculateSubmit.addEventListener('submit', calculateLoanItems);
 function calculateLoanItems(e) {
@@ -25,15 +24,15 @@ function calculateLoanItems(e) {
     let loanSizeInRange = checkLoanSize(financing);
     let repaymentRateInRange = checkRepaymentRate(financing);
     if (loanSizeInRange && repaymentRateInRange) {
-        calculateAdminFee(financing);
+        addAdminFee(financing);
+        calculateUpfrontAdmin(financing);
+        calculateMonthsToPay(financing);
         displayResults(financing);
     }
-    console.log(financing);
 }
 function checkLoanSize(financing: Calculation):boolean {
     let loanInput = document.querySelector<HTMLInputElement>('#amountToBorrow');
     let errorModal = document.querySelector('#modal1');
-    console.log(errorModal);
     if(financing.loanAmount > 0 && financing.loanAmount <= financing.maxLoanSize) {
         loanInput.classList.remove('error');
         errorModal.classList.add('errorModal');
@@ -55,7 +54,7 @@ function checkRepaymentRate(financing: Calculation):boolean {
     errorModal.classList.remove('errorModal');
     return false;
 }
-function calculateAdminFee(financing: Calculation):number {
+function addAdminFee(financing: Calculation):number {
     if (financing.loanAmount > (financing.maxLoanSize * 0.9)) {
         return financing.loanAmount += 1000;
     } else if (financing.loanAmount > (financing.maxLoanSize * 0.8)) {
@@ -63,13 +62,29 @@ function calculateAdminFee(financing: Calculation):number {
     }
     return financing.loanAmount;
 }
-async function displayResults(financing: Calculation) {
+function calculateUpfrontAdmin(financing: Calculation):number {
+    return financing.adminFee = (financing.loanAmount * 0.05);
+}
+function calculateMonthsToPay(financing: Calculation):number {
+    let loanAmount = financing.loanAmount;
+    let monthlySalary = financing.expectedSalary / 12;
+    let monthlyRepayment = (monthlySalary/financing.repaymentRate).toFixed(2);
+    while (loanAmount > 0) {
+        //@ts-ignore
+        loanAmount -= monthlyRepayment;
+        financing.monthsToRepay++;
+        console.log(financing.monthsToRepay);
+        console.log(loanAmount);
+        console.log(monthlyRepayment);
+    }
+   return financing.monthsToRepay;
+}
+async function displayResults(financing: Calculation):Promise<void> {
     let response = await fetch('template.hbs');
     let source = await response.text();
     //@ts-ignore
-    template = Handlebars.compile(source);
+    let template = Handlebars.compile(source);
     //@ts-ignore
     const html = template(financing);
     document.querySelector('.showResults').innerHTML = html;
 }
-
