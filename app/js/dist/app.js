@@ -46,6 +46,7 @@ var financing = {
 calculateSubmit.addEventListener('submit', calculateLoanItems);
 function calculateLoanItems(e) {
     e.preventDefault();
+    financing.monthsToRepay = 0;
     financing.loanAmount = Number(document.querySelector('#amountToBorrow').value);
     financing.repaymentRate = Number(document.querySelector('#repaymentRate').value);
     financing.expectedSalary = Number(document.querySelector('#expectedSalary').value);
@@ -92,18 +93,16 @@ function addAdminFee(financing) {
     return financing.loanAmount;
 }
 function calculateUpfrontAdmin(financing) {
-    return financing.adminFee = (financing.loanAmount * 0.05);
+    financing.adminFee = Number((financing.loanAmount * 0.05).toFixed(2));
+    return financing.adminFee;
 }
 function calculateMonthsToPay(financing) {
     var loanAmount = financing.loanAmount;
     var monthlySalary = financing.expectedSalary / 12;
-    var monthlyRepayment = (monthlySalary / financing.repaymentRate).toFixed(2);
+    var monthlyRepayment = (monthlySalary * (financing.repaymentRate / 100)).toFixed(2);
     while (loanAmount > 0) {
         loanAmount -= monthlyRepayment;
         financing.monthsToRepay++;
-        console.log(financing.monthsToRepay);
-        console.log(loanAmount);
-        console.log(monthlyRepayment);
     }
     return financing.monthsToRepay;
 }
